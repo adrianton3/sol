@@ -1,9 +1,13 @@
 (() => {
 	'use strict'
 
-	function makeCanvas (canvas, size) {
+	function makeCanvas (canvas, size, shape) {
 		canvas.width = size.width
 		canvas.height = size.height
+
+		if (shape === 'circle') {
+			canvas.style.borderRadius = `${Math.min(size.width, size.height)}px`
+		}
 
 		const context = canvas.getContext('2d')
 

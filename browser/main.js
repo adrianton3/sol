@@ -11,7 +11,7 @@
     const scene = sampleScenes.s1
 
     const world = new World(scene)
-    const canvas = makeCanvas(document.getElementById('canvas'), scene.size)
+    const canvas = makeCanvas(document.getElementById('canvas'), scene.size, scene.shape)
     const subgrid = new Subgrid(scene.size)
 
     function step () {

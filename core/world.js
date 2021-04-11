@@ -6,9 +6,10 @@
         emitters,
     } = typeof module === 'undefined' ? self.sol : require('./emitters')
 
-    function World ({ size, emitters, entities }) {
+    function World ({ size, shape, emitters, entities }) {
         this.size = size
         this.position = { x: -size.width / 2, y: -size.height / 2 }
+        this.shape = shape
         this.emitters = emitters
         this.mask = new Space(entities)
 
@@ -43,7 +44,13 @@
             thread.tick(this)
         }
 
-        {
+        if (this.shape === 'circle') {
+            const radiusSquared = (Math.min(this.size.width, this.size.height) / 2) ** 2
+
+            removeSwap(this.threads, (thread) =>
+                thread.x ** 2 + thread.y ** 2 < radiusSquared
+            )
+        } else {
             const minX = this.position.x
             const minY = this.position.y
             const maxX = this.position.x + this.size.width - 1

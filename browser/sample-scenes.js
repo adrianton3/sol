@@ -1,4 +1,5 @@
 (() => {
+    'use strict'
 
     const {
         emitters,
@@ -10,6 +11,7 @@
             width: 512,
             height: 512,
         },
+        shape: 'circle',
         entities: (() => {
             const entities = []
 
