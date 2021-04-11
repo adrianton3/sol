@@ -22,7 +22,9 @@
 
         canvas.drawSubgrid(subgrid, 7)
 
-        requestAnimationFrame(step)
+        if (world.threads.length > 0) {
+            requestAnimationFrame(step)
+        }
     }
 
     world.init(16670)
