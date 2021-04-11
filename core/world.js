@@ -1,10 +1,8 @@
 (() => {
     'use strict'
 
-    const {
-        Space,
-        emitters,
-    } = typeof module === 'undefined' ? self.sol : require('./emitters')
+    const { Space } = typeof module === 'undefined' ? self.sol : require('./space')
+    const { emitters } = typeof module === 'undefined' ? self.sol : require('./emitters')
 
     function World ({ size, shape, emitters, entities }) {
         this.size = size
