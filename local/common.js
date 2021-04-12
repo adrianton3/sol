@@ -34,7 +34,7 @@ function write (subgrid, file) {
     })
 }
 
-function makeGif (files, prefix) {
+function makeGif (files, prefix, { framerate }) {
     fs.writeFileSync(
         path.join(__dirname, 'out', 'list.txt'),
         files.map((file) => `file ./${path.parse(file).base}`).join('\n'),
@@ -43,7 +43,7 @@ function makeGif (files, prefix) {
     childProcess.spawnSync(
         'ffmpeg',
         [
-            '-r', '25',
+            '-r', String(framerate),
             '-f', 'concat',
             '-safe', '0',
             '-i', 'list.txt',

@@ -9,7 +9,7 @@
             width: 512,
             height: 512,
         },
-        shape: 'circle',
+        shape: 'rectangle',
         entities (time) {
             const entities = []
 
