@@ -2,7 +2,7 @@
     'use strict'
 
     const { Space } = typeof module === 'undefined' ? self.sol : require('./space')
-    const { emitters } = typeof module === 'undefined' ? self.sol : require('./emitters')
+    const { emit } = typeof module === 'undefined' ? self.sol : require('./emitters')
 
     function World ({ size, shape, emitters, entities }) {
         this.size = size
@@ -16,9 +16,11 @@
 
     World.prototype.init = function (count) {
         for (const emitter of this.emitters) {
-            const threads = emitters.emit(emitter, Math.floor(count / this.emitters.length))
+            const threads = emit(emitter, Math.floor(count / this.emitters.length))
             this.threads.push(...threads)
         }
+
+        this.removeOutside()
     }
 
     function removeSwap (array, predicate) {
@@ -37,11 +39,7 @@
         array.length = newLength
     }
 
-    World.prototype.tick = function () {
-        for (const thread of this.threads) {
-            thread.tick(this)
-        }
-
+    World.prototype.removeOutside = function () {
         if (this.shape === 'circle') {
             const radiusSquared = (Math.min(this.size.width, this.size.height) / 2) ** 2
 
@@ -61,6 +59,14 @@
                 thread.y < maxY
             )
         }
+    }
+
+    World.prototype.tick = function () {
+        for (const thread of this.threads) {
+            thread.tick(this)
+        }
+
+        this.removeOutside()
     }
 
     World.prototype.draw = function (subgrid) {

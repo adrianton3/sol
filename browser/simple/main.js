@@ -10,15 +10,8 @@
 
     const scene = sampleScenes.s1
 
-    const world = new World({
-        size: scene.size,
-        shape: scene.shape,
-        entities: scene.entities(0),
-        emitters: scene.emitters,
-    })
-
+    const world = new World(scene)
     const canvas = makeCanvas(document.getElementById('canvas'), scene.size, scene.shape)
-
     const subgrid = new Subgrid(scene.size)
 
     function step () {
@@ -29,9 +22,7 @@
 
         canvas.drawSubgrid(subgrid, 7)
 
-        if (world.threads.length > 0) {
-            requestAnimationFrame(step)
-        }
+        requestAnimationFrame(step)
     }
 
     world.init(16670)

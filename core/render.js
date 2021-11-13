@@ -4,7 +4,7 @@
     const { Subgrid } = typeof module === 'undefined' ? self.sol : require('./subgrid')
     const { World } = typeof module === 'undefined' ? self.sol : require('./world')
 
-    function render (scene, time, threadCount) { // scale
+    function render (scene, time, threadCount) {
         const world = new World({
             size: scene.size,
             shape: scene.shape,
@@ -24,7 +24,7 @@
         return subgrid
     }
 
-    function renderMotion (scene, time, frameTime, subframeCount, threadCount) { // scale
+	function renderMotion (scene, time, frameTime, subframeCount, threadCount) {
         const subgrid = new Subgrid(scene.size)
 
         for (let i = 0; i < subframeCount; i++) {
@@ -45,6 +45,7 @@
 
         return subgrid
     }
+
 
     Object.assign(typeof module === 'undefined' ? self.sol : module.exports, {
         render,

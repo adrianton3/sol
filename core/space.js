@@ -1,15 +1,6 @@
 (() => {
     'use strict'
 
-    function makeBall (x, y, radius, type) {
-        return {
-            x,
-            y,
-            radius,
-            type,
-        }
-    }
-
     function Space (entities) {
         this.entities = entities
     }
@@ -18,7 +9,7 @@
         let deltaMin = Number.MAX_VALUE
 
         for (const entity of this.entities) {
-            const distSquared = (x - entity.x) ** 2 + (y - entity.y) ** 2
+            const distSquared = (x - entity.position.x) ** 2 + (y - entity.position.y) ** 2
 
             if (distSquared <= entity.radius ** 2) {
                 return { entity, dist: 0 }
@@ -34,7 +25,6 @@
     }
 
     Object.assign(typeof module === 'undefined' ? self.sol : module.exports, {
-        makeBall,
         Space,
     })
 })()

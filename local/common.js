@@ -35,8 +35,10 @@ function write (subgrid, file) {
 }
 
 function makeGif (files, prefix, { framerate }) {
+    const basePath = process.cwd()
+
     fs.writeFileSync(
-        path.join(__dirname, 'out', 'list.txt'),
+        path.join(basePath, 'out', 'list.txt'),
         files.map((file) => `file ./${path.parse(file).base}`).join('\n'),
     )
 
@@ -52,7 +54,7 @@ function makeGif (files, prefix, { framerate }) {
             '-y',
             `${prefix}.gif`,
         ],
-        { cwd: path.join(__dirname, 'out') },
+        { cwd: path.join(basePath, 'out') },
     )
 }
 

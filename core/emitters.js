@@ -49,7 +49,7 @@
     }
 
     const emitters = {
-        'dot': (emitter) => {
+        dot: function (emitter) {
             return new Thread(
                 emitter.position.x,
                 emitter.position.y,
@@ -57,7 +57,7 @@
             )
         },
 
-        'cone': (emitter) => {
+        cone: function (emitter) {
             return new Thread(
                 emitter.position.x,
                 emitter.position.y,
@@ -65,7 +65,7 @@
             )
         },
 
-        'line': (emitter) => {
+        line: function (emitter) {
             const radius = random(-emitter.radius, emitter.radius)
 
             return new Thread(
@@ -75,7 +75,7 @@
             )
         },
 
-        'inward': (emitter) => {
+        inward: function (emitter) {
             const angle = random(0, Math.PI * 2)
 
             return new Thread(
@@ -85,7 +85,7 @@
             )
         },
 
-        'outward': (emitter) => {
+        outward: function (emitter) {
             const angle = random(0, Math.PI * 2)
 
             return new Thread(
@@ -115,7 +115,7 @@
             line,
             inward,
             outward,
-            emit,
         },
+        emit,
     })
 })()
