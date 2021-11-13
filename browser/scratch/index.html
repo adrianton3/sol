@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Sol</title>
+
+    <style>
+        body {
+            background-color: hsl(0, 0%, 4%);
+            text-align: center;
+        }
+
+        .app {
+            display: inline-block;
+            width: 1308px;
+        }
+
+        canvas {
+            border-width: 2px;
+            border-style: dashed;
+            border-color: hsl(0, 0%, 50%);
+            padding: 4px;
+
+            float: left;
+            margin-right: 16px;
+        }
+
+        #in-scene {
+            width: 768px;
+            height: 524px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <canvas id="canvas"></canvas>
+        <div id="in-scene"></div>
+    </div>
+
+
+    <script src="ace/ace.js"></script>
+    <script src="ace/mode-javascript.js"></script>
+    <script src="ace/worker-javascript.js"></script>
+    <script src="ace/theme-monokai.js"></script>
+
+    <script>window.sol = {}</script>
+
+    <script src="../../core/space.js"></script>
+    <script src="../../core/actions.js"></script>
+    <script src="../../core/thread.js"></script>
+    <script src="../../core/emitters.js"></script>
+    <script src="../../core/subgrid.js"></script>
+    <script src="../../core/world.js"></script>
+    <script src="../../core/render.js"></script>
+
+    <script src="../canvas.js"></script>
+    <script src="common.js"></script>
+    <script src="make-scene.js"></script>
+    <script src="sample-scenes.js"></script>
+
+    <script src="main.js"></script>
+</body>
+</html>
