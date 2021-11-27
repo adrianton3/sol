@@ -2,40 +2,40 @@
     'use strict'
 
     const vecPrototype = {
-        add: function (that) {
+        add (that) {
             return vec(this.x + that.x, this.y + that.y)
         },
 
-        sub: function (that) {
+        sub (that) {
             return vec(this.x - that.x, this.y - that.y)
         },
 
-        scale: function (value) {
+        scale (value) {
             return vec(this.x * value, this.y * value)
         },
 
-        mul: function (that) {
+        mul (that) {
             return vec(this.x * that.x, this.y * that.y)
         },
 
-        size: function () {
+        size () {
             return Math.sqrt(this.x ** 2 + this.y ** 2)
         },
 
-        normalize: function () {
+        normalize () {
             const size = this.size()
             return vec(this.x / size, this.y / size)
         },
 
-        distance: function (that) {
+        distance (that) {
             return Math.sqrt((this.x - that.x) ** 2 + (this.y - that.y) ** 2)
         },
 
-        mix: function (that, fraction) {
+        mix (that, fraction) {
             return vec(this.x * (1. - fraction) + that.x * fraction, this.y * (1. - fraction) + that.y * fraction)
         },
 
-        mid: function (that) {
+        mid (that) {
             return vec((this.x + that.x) * .5, (this.y + that.y) * .5)
         },
     }
@@ -61,8 +61,8 @@
         return vec(Math.cos(radians), Math.sin(radians))
     }
 
-    Object.assign(self.sol, {
-        vec,
+    Object.assign(typeof module === 'undefined' ? self.sol : module.exports, {
+		vec,
         vecFromAngle,
-    })
+	})
 })()

@@ -15,6 +15,17 @@
     const shape = 'square'
 
     const canvas = makeCanvas(document.getElementById('canvas'), size, shape)
+    let editor
+
+    const elements = {
+        statusBar: document.getElementById('status-bar'),
+        status: document.getElementById('status'),
+
+        renderBar: document.getElementById('render-bar'),
+        render: document.getElementById('render'),
+        renderStatus: document.getElementById('render-status'),
+        renderRequest: document.getElementById('render-request'),
+    }
 
     const makeScene = makeScener()
 
@@ -34,6 +45,61 @@
         editor.setValue(sampleScenes.s2, -1)
 
         return editor
+    }
+
+    function handleRender () {
+        const source = editor.getValue()
+
+        fetch(`${location.protocol}//${location.hostname}:8005/render`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                scene: {
+                    size,
+                    shape,
+                    body: source,
+                },
+                frameCount: 30,
+                subframeCount: 8,
+                threadCount: 16670,
+                scale: 1,
+                exposureMultiplier: 1,
+            })
+        }).then((response) => {
+            elements.renderStatus.textContent = response.status === 503 ? 'still busy with' : 'rendering'
+            return response.json()
+        }).then((body) => {
+            elements.renderRequest.textContent = body.renderRequest
+            elements.renderRequest.href = `${location.origin}/out/${body.renderRequest}.gif`
+        })
+    }
+
+    function setupUi () {
+        elements.renderBar.hidden = false
+
+        elements.render.addEventListener('click', handleRender)
+    }
+
+    function setupTicker () {
+        elements.statusBar.hidden = false
+
+        function poll () {
+            fetch(`${location.protocol}//${location.hostname}:8005/`)
+            .then((response) => response.json())
+            .then((body) => {
+                elements.status.textContent = body.status
+
+                if (body.status === 'idle') {
+                    elements.renderStatus.textContent = 'idle/done'
+                }
+
+                setTimeout(poll, 500)
+            })
+        }
+
+        poll()
     }
 
     const renderInc = (() => {
@@ -57,7 +123,7 @@
                     world.tick()
                 }
 
-                canvas.drawSubgrid(subgrid, 7)
+                canvas.drawSubgrid(subgrid, 2)
 
                 frameTimeSum += performance.now() - startTime
 
@@ -99,7 +165,7 @@
                     world.tick()
                 }
 
-                canvas.drawSubgrid(subgrid, 7)
+                canvas.drawSubgrid(subgrid, 2)
 
                 frameTimeSum += performance.now() - startTime
 
@@ -146,5 +212,10 @@
         }
     }
 
-    setupEditor('in-scene', handleSource)
+    editor = setupEditor('in-scene', handleSource)
+
+    if (location.hostname === '127.0.0.1') {
+        setupUi()
+        setupTicker()
+    }
 })()

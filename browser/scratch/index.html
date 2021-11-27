@@ -8,6 +8,8 @@
         body {
             background-color: hsl(0, 0%, 4%);
             text-align: center;
+            font-family: sans-serif;
+            color: white;
         }
 
         .app {
@@ -29,12 +31,64 @@
             width: 768px;
             height: 524px;
         }
+
+        #status-bar,#render-bar {
+            margin-top: 16px;
+            text-align: left;
+        }
+
+        #status {
+            margin-left: 16px;
+        }
+
+        #render {
+            width: 60px;
+            height: 22px;
+            padding: 0 0 2px 0;
+            border-radius: 2px;
+            outline: none;
+            color: white;
+            background-color: hsl(10, 90%, 36%);
+            border-style: solid;
+            border-top-color: hsl(10, 90%, 46%);
+            border-top-width: 1px;
+            border-bottom-color: hsl(10, 90%, 26%);
+            border-bottom-width: 1px;
+            border-left-width: 0;
+            border-right-width: 0;
+            transition: background-color 120ms;
+        }
+
+        #render:hover {
+            background-color: hsl(10, 100%, 53%);
+            transition: background-color 40ms;
+        }
+
+        #render-status {
+            margin-left: 16px;
+        }
+
+        #render-request {
+            margin-left: 16px;
+            color: hsl(261deg 100% 75%);
+        }
     </style>
 </head>
 <body>
     <div class="app">
         <canvas id="canvas"></canvas>
         <div id="in-scene"></div>
+
+        <div id="status-bar" hidden>
+            <span>Status</span>
+            <span id="status"></span>
+        </div>
+
+        <div id="render-bar" hidden>
+            <button id="render">Render</button>
+            <span id="render-status"></span>
+            <a id="render-request" href="" target="_blank"></a>
+        </div>
     </div>
 
 

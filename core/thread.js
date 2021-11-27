@@ -17,11 +17,11 @@
         this.skipCountdown = 0
     }
 
-    Thread.prototype.tick = function (world) {
+    Thread.prototype.tick = function (mask) {
         if (this.skipCountdown > 0) {
             this.skipCountdown--
         } else {
-            const { entity, dist } = world.mask.get(this.x, this.y)
+            const { entity, dist } = mask.get(this.x, this.y)
 
             if (entity == null) {
                 this.skipCountdown = Math.floor(dist / step)

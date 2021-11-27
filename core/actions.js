@@ -11,17 +11,6 @@
             },
         },
 
-        'green': {
-            enter (thread, entity) {
-                thread.angle += (Math.random() * 1.5) - .75
-                thread.angleIncrement = Math.random() > .5 ? .005 : -.005
-                thread.angleCountdown = 420
-            },
-            exit (thread) {
-
-            },
-        },
-
         'yellow': {
             enter (thread, entity) {
                 thread.setAngle(

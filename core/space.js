@@ -12,7 +12,7 @@
             const distSquared = (x - entity.position.x) ** 2 + (y - entity.position.y) ** 2
 
             if (distSquared <= entity.radius ** 2) {
-                return { entity, dist: 0 }
+                return { entity, dist: 0. }
             }
 
             const delta = Math.sqrt(distSquared) - entity.radius

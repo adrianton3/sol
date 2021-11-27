@@ -17,9 +17,9 @@
         }
     }
 
-    Object.assign(self.sol, {
-        mix,
+    Object.assign(typeof module === 'undefined' ? self.sol : module.exports, {
+		mix,
         clamp,
         lerp,
-    })
+	})
 })()

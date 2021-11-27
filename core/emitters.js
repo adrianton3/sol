@@ -49,7 +49,7 @@
     }
 
     const emitters = {
-        dot: function (emitter) {
+        dot (emitter) {
             return new Thread(
                 emitter.position.x,
                 emitter.position.y,
@@ -57,7 +57,7 @@
             )
         },
 
-        cone: function (emitter) {
+        cone (emitter) {
             return new Thread(
                 emitter.position.x,
                 emitter.position.y,
@@ -65,7 +65,7 @@
             )
         },
 
-        line: function (emitter) {
+        line (emitter) {
             const radius = random(-emitter.radius, emitter.radius)
 
             return new Thread(
@@ -75,7 +75,7 @@
             )
         },
 
-        inward: function (emitter) {
+        inward (emitter) {
             const angle = random(0, Math.PI * 2)
 
             return new Thread(
@@ -85,7 +85,7 @@
             )
         },
 
-        outward: function (emitter) {
+        outward (emitter) {
             const angle = random(0, Math.PI * 2)
 
             return new Thread(
@@ -96,7 +96,11 @@
         },
     }
 
-    function emit (emitter, count) {
+    function emitThread (emitter) {
+        return emitters[emitter.type](emitter)
+    }
+
+    function emitThreads (emitter, count) {
         const makeThread = emitters[emitter.type]
 
         const threads = []
@@ -108,14 +112,40 @@
         return threads
     }
 
+    const scaleEmitter = (() => {
+        const emitterScalers = {
+            dot (emitter, s) {
+                return dot({ x: emitter.position.x * s, y: emitter.position.y * s })
+            },
+            cone (emitter, s) {
+                return cone({ x: emitter.position.x * s, y: emitter.position.y * s }, emitter.angle, emitter.span)
+            },
+            line (emitter, s) {
+                return line({ x: emitter.position.x * s, y: emitter.position.y * s }, emitter.angle, emitter.radius * s)
+            },
+            inward (emitter, s) {
+                return inward({ x: emitter.position.x * s, y: emitter.position.y * s }, emitter.radius * s)
+            },
+            outward (emitter, s) {
+                return outward({ x: emitter.position.x * s, y: emitter.position.y * s }, emitter.radius * s)
+            },
+        }
+
+        return (emitter, s) => {
+            return emitterScalers[emitter.type](emitter, s)
+        }
+    })()
+
     Object.assign(typeof module === 'undefined' ? self.sol : module.exports, {
-        emitters: {
+        makeEmitter: {
             dot,
             cone,
             line,
             inward,
             outward,
         },
-        emit,
+        emitThread,
+        emitThreads,
+        scaleEmitter,
     })
 })()
