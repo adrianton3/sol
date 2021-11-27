@@ -25,6 +25,14 @@
         render: document.getElementById('render'),
         renderStatus: document.getElementById('render-status'),
         renderRequest: document.getElementById('render-request'),
+
+        options: {
+            frameCount: document.getElementById('option-frame-count'),
+            subframeCount: document.getElementById('option-subframe-count'),
+            threadCount: document.getElementById('option-thread-count'),
+            scale: document.getElementById('option-scale'),
+            exposureMultiplier: document.getElementById('option-exposure-multiplier'),
+        }
     }
 
     const makeScene = makeScener()
@@ -61,11 +69,11 @@
                     shape,
                     body: source,
                 },
-                frameCount: 30,
-                subframeCount: 8,
-                threadCount: 16670,
-                scale: 1,
-                exposureMultiplier: 1,
+                frameCount: Number(elements.options.frameCount.value),
+                subframeCount: Number(elements.options.subframeCount.value),
+                threadCount: Number(elements.options.threadCount.value),
+                scale: Number(elements.options.scale.value),
+                exposureMultiplier: Number(elements.options.exposureMultiplier.value),
             })
         }).then((response) => {
             elements.renderStatus.textContent = response.status === 503 ? 'still busy with' : 'rendering'

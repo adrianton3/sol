@@ -72,6 +72,18 @@
             margin-left: 16px;
             color: hsl(261deg 100% 75%);
         }
+
+        #options {
+            margin-top: 16px;
+        }
+
+        #options input {
+            min-width: 128px;
+        }
+
+        #options td {
+            min-width: 256px;
+        }
     </style>
 </head>
 <body>
@@ -88,6 +100,29 @@
             <button id="render">Render</button>
             <span id="render-status"></span>
             <a id="render-request" href="" target="_blank"></a>
+            <br>
+            <table id="options">
+                <tr>
+                    <td>frame-count</td>
+                    <td><input id="option-frame-count" type="number" min="1" max="120" value="30"></td>
+                </tr>
+                <tr>
+                    <td>subframe-count</td>
+                    <td><input id="option-subframe-count" type="number" min="1" max="8" value="8"></td>
+                </tr>
+                <tr>
+                    <td>thread-count</td>
+                    <td><input id="option-thread-count" type="number" min="1024" max="1073741824" value="16670"></td>
+                </tr>
+                <tr>
+                    <td>scale</td>
+                    <td><input id="option-scale" type="number" min="0.5" max="4" value="1"></td>
+                </tr>
+                <tr>
+                    <td>exposure-multiplier</td>
+                    <td><input id="option-exposure-multiplier" type="number" min="0.1" max="128" value="1"></td>
+                </tr>
+            </table>
         </div>
     </div>
 
