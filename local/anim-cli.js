@@ -3,6 +3,7 @@
 const anim = require('./anim')
 const { readScene, makePrefix } = require('./common')
 
+
 if (process.argv.length < 2) {
     console.error('use: node anim-cli.js <scene-file> [frame-count] [subframe-count] [thread-count] [scale] [exposure-multiplier]')
     process.exit(1)

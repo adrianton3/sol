@@ -22,7 +22,8 @@
         status: document.getElementById('status'),
 
         renderBar: document.getElementById('render-bar'),
-        render: document.getElementById('render'),
+        renderSingle: document.getElementById('render-single'),
+        renderAnim: document.getElementById('render-anim'),
         renderStatus: document.getElementById('render-status'),
         renderRequest: document.getElementById('render-request'),
 
@@ -55,7 +56,7 @@
         return editor
     }
 
-    function handleRender () {
+    function handleRender (type) {
         const source = editor.getValue()
 
         fetch(`${location.protocol}//${location.hostname}:8005/render`, {
@@ -64,6 +65,7 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                type,
                 scene: {
                     size,
                     shape,
@@ -80,14 +82,17 @@
             return response.json()
         }).then((body) => {
             elements.renderRequest.textContent = body.renderRequest
-            elements.renderRequest.href = `${location.origin}/out/${body.renderRequest}.gif`
+            elements.renderRequest.href = type === 'single'
+                ? `${location.origin}/out/${body.renderRequest}.png`
+                : `${location.origin}/out/${body.renderRequest}.gif`
         })
     }
 
     function setupUi () {
         elements.renderBar.hidden = false
 
-        elements.render.addEventListener('click', handleRender)
+        elements.renderSingle.addEventListener('click', () => { handleRender('single') })
+        elements.renderAnim.addEventListener('click', () => { handleRender('anim') })
     }
 
     function setupTicker () {

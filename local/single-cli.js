@@ -1,7 +1,7 @@
 'use strict'
 
 const single = require('./single')
-const { readScene } = require('./common')
+const { readScene, makePrefix } = require('./common')
 
 
 if (process.argv.length < 2) {
@@ -13,4 +13,5 @@ single.run({
     sceneRaw: readScene(process.argv[2]),
     threadCount: process.argv[3] != null ? Number(process.argv[3]) : 16670,
     scale: process.argv[4] != null ? Number(process.argv[4]) : 1,
+    prefix: process.argv[5] != null ? process.argv[5] : makePrefix(),
 })

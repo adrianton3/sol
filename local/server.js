@@ -46,31 +46,46 @@ app.post('/render', (req, res) => {
         JSON.stringify(payload.scene),
     )
 
-    const animProcess = child_process.spawn(
-        'node',
-        [
-            'local/anim-cli.js',
-            path.join(__dirname, 'tmp', `${prefix}.request`),
-            `${payload.frameCount}`,
-            `${payload.subframeCount}`,
-            `${payload.threadCount}`,
-            `${payload.scale}`,
-            `${payload.exposureMultiplier}`,
-            prefix,
-        ],
-    )
+    const renderProcess = (() => {
+        if (payload.type === 'single') {
+            return child_process.spawn(
+                'node',
+                [
+                    'local/single-cli.js',
+                    path.join(__dirname, 'tmp', `${prefix}.request`),
+                    `${payload.threadCount}`,
+                    `${payload.scale}`,
+                    prefix,
+                ],
+            )
+        } else {
+            return child_process.spawn(
+                'node',
+                [
+                    'local/anim-cli.js',
+                    path.join(__dirname, 'tmp', `${prefix}.request`),
+                    `${payload.frameCount}`,
+                    `${payload.subframeCount}`,
+                    `${payload.threadCount}`,
+                    `${payload.scale}`,
+                    `${payload.exposureMultiplier}`,
+                    prefix,
+                ],
+            )
+        }
+    })()
 
     let outData = ''
-    animProcess.stdout.on('data', (data) => {
+    renderProcess.stdout.on('data', (data) => {
         outData += data
     })
 
     let errData = ''
-    animProcess.stderr.on('data', (data) => {
+    renderProcess.stderr.on('data', (data) => {
         errData += data
     })
 
-    animProcess.on('close', (code) => {
+    renderProcess.on('close', (code) => {
         state.status = 'idle'
 
         if (code !== 0) {
@@ -85,4 +100,6 @@ app.post('/render', (req, res) => {
     })
 })
 
-app.listen(8005)
+const port = 8005
+app.listen(port)
+console.log(`server listening on ${port}`)
