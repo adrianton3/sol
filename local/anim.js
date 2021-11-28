@@ -1,5 +1,7 @@
 'use strict'
 
+const path = require('path')
+
 const { render, renderMotion } = require('../core/render')
 const { writePng, makeGif } = require('./common')
 
@@ -16,7 +18,7 @@ function run ({ sceneRaw, frameCount, subframeCount, threadCount, scale, exposur
             { threadCount, scale }
         )
 
-        writes.push(writePng(subgrid, `out/${prefix}_${frame}.png`, exposureMultiplier))
+        writes.push(writePng(subgrid, path.join('out', `${prefix}_${frame}.png`), exposureMultiplier))
 
         console.log('frame', frame + 1, '/', frameCount)
     }
@@ -24,7 +26,7 @@ function run ({ sceneRaw, frameCount, subframeCount, threadCount, scale, exposur
     Promise.all(writes).then((files) => {
         makeGif(files, prefix, { framerate: frameCount }) // allow less/more than 1 second
         console.log('done')
-        console.log(`out/${prefix}.gif`)
+        console.log(path.join('out', `${prefix}.gif`))
     })
 }
 

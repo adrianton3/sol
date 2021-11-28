@@ -3,12 +3,13 @@
 const path = require('path')
 
 const { renderAlt } = require('../core/render')
-const { readScene, writeSubgrid } = require('./common')
+const { readScene, writeSubgrid, ensureTmp } = require('./common')
 
 
 function run ({ sceneRaw, threadCount, scale, prefix }) {
     const subgrid = renderAlt(sceneRaw, 0, { threadCount, scale })
 
+    ensureTmp()
     const outFile = path.join(__dirname, 'tmp-partials', `${prefix}.raw`)
     writeSubgrid(subgrid, outFile).then(() => {
         console.log('done')

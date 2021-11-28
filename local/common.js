@@ -100,6 +100,16 @@ function makePrefix () {
     ].join('')
 }
 
+function ensureTmp () {
+    ['tmp', 'tmp-partials'].forEach((entry) => {
+        const dir = path.join(__dirname, entry)
+
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir)
+        }
+    })
+}
+
 Object.assign(module.exports, {
     getSubgridMax,
     writePng,
@@ -107,4 +117,5 @@ Object.assign(module.exports, {
     makeGif,
     readScene,
     makePrefix,
+    ensureTmp,
 })

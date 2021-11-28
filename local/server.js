@@ -8,7 +8,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
-const { makePrefix } = require('./common')
+const { makePrefix, ensureTmp } = require('./common')
 
 
 const app = express()
@@ -101,6 +101,7 @@ app.post('/render', (req, res) => {
     })
 })
 
+ensureTmp()
 const port = 8005
 app.listen(port)
 console.log(`server listening on ${port}`)

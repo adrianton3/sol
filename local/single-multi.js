@@ -5,7 +5,7 @@ const os = require('os')
 const child_process = require('child_process')
 
 const { scaleSceneSize } = require('../core/scene')
-const { readScene } = require('./common')
+const { readScene, ensureTmp } = require('./common')
 const { compose, rawToPng } = require('./raw')
 
 
@@ -59,6 +59,7 @@ function run ({ sceneFile, threadCount, scale, prefix }) {
 
     console.log('dispatch count', dispatchCount)
 
+    ensureTmp()
     dispatchAll(sceneFile, prefix, dispatchCount, { threadCount, scale }).then((renderResults) => {
         compose(
             renderResults.map((renderResult) => path.join(__dirname, 'tmp-partials', `${renderResult}.raw`)),
