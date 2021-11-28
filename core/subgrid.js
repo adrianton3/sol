@@ -11,7 +11,7 @@
             height: size.height,
         }
 
-        this.grid = new Float64Array(this.sizePot.width * this.sizePot.height)
+        this.grid = new Float32Array(this.sizePot.width * this.sizePot.height)
     }
 
     Subgrid.prototype.add = function (x, y) {

@@ -19,11 +19,11 @@ function getMax (array) {
 
 function compose (filesIn, fileOut) {
     const buffer = fs.readFileSync(filesIn[0])
-    const sum = new Float64Array(buffer.buffer, buffer.byteOffset, buffer.length / 8)
+    const sum = new Float32Array(buffer.buffer, buffer.byteOffset, buffer.length / 4)
 
     for (let i = 1; i < filesIn.length; i++) {
         const buffer = fs.readFileSync(filesIn[i])
-        const values = new Float64Array(buffer.buffer, buffer.byteOffset, buffer.length / 8)
+        const values = new Float32Array(buffer.buffer, buffer.byteOffset, buffer.length / 4)
 
         for (let j = 0; j < sum.length; j++) {
             sum[j] += values[j]
@@ -58,7 +58,7 @@ function guessSize (flatSize) {
 
 function rawToPng (fileIn, fileOut, multiplierMaybe) {
     const buffer = fs.readFileSync(fileIn)
-    const values = new Float64Array(buffer.buffer, buffer.byteOffset, buffer.length / 8)
+    const values = new Float32Array(buffer.buffer, buffer.byteOffset, buffer.length / 4)
 
     // ---
     const { width, height } = guessSize(values.length) // hack
