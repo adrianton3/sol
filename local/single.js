@@ -1,14 +1,14 @@
 'use strict'
 
-const { render, renderAlt } = require('../core/render')
-const { write } = require('./common')
+const { renderAlt } = require('../core/render')
+const { writePng } = require('./common')
 
 
 function run ({ sceneRaw, threadCount, scale, prefix }) {
     const subgrid = renderAlt(sceneRaw, 0, { threadCount, scale })
 
     const outFile = `out/${prefix}.png`
-    write(subgrid, outFile).then(() => {
+    writePng(subgrid, outFile).then(() => {
         console.log('done')
         console.log(outFile)
     })

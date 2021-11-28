@@ -10,6 +10,7 @@ const bodyParser = require('body-parser')
 
 const { makePrefix } = require('./common')
 
+
 const app = express()
 
 app.use(cors())
@@ -51,7 +52,7 @@ app.post('/render', (req, res) => {
             return child_process.spawn(
                 'node',
                 [
-                    'local/single-cli.js',
+                    path.join(__dirname, 'single-cli.js'),
                     path.join(__dirname, 'tmp', `${prefix}.request`),
                     `${payload.threadCount}`,
                     `${payload.scale}`,
@@ -62,7 +63,7 @@ app.post('/render', (req, res) => {
             return child_process.spawn(
                 'node',
                 [
-                    'local/anim-cli.js',
+                    path.join(__dirname, 'anim-cli.js'),
                     path.join(__dirname, 'tmp', `${prefix}.request`),
                     `${payload.frameCount}`,
                     `${payload.subframeCount}`,

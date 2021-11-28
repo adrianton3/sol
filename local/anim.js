@@ -1,7 +1,7 @@
 'use strict'
 
 const { render, renderMotion } = require('../core/render')
-const { write, makeGif } = require('./common')
+const { writePng, makeGif } = require('./common')
 
 
 function run ({ sceneRaw, frameCount, subframeCount, threadCount, scale, exposureMultiplier, prefix }) {
@@ -16,7 +16,7 @@ function run ({ sceneRaw, frameCount, subframeCount, threadCount, scale, exposur
             { threadCount, scale }
         )
 
-        writes.push(write(subgrid, `out/${prefix}_${frame}.png`, exposureMultiplier))
+        writes.push(writePng(subgrid, `out/${prefix}_${frame}.png`, exposureMultiplier))
 
         console.log('frame', frame + 1, '/', frameCount)
     }

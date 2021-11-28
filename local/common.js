@@ -6,6 +6,7 @@ const childProcess = require('child_process')
 
 const Jimp = require('jimp')
 
+
 function getSubgridMax (subgrid) {
     let max = 0.
 
@@ -37,7 +38,7 @@ function subgridToRgba (subgrid, multiplierMaybe) {
     return imageData
 }
 
-function write (subgrid, file, multiplier) {
+function writePng (subgrid, file, multiplier) {
     return new Promise((resolve, reject) => {
         new Jimp({
             data: subgridToRgba(subgrid, multiplier),
@@ -46,6 +47,12 @@ function write (subgrid, file, multiplier) {
         }, (err, image) => {
             image.write(file, () => { resolve(file) })
         })
+    })
+}
+
+function writeSubgrid (subgrid, file) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(file, new Buffer(subgrid.grid.buffer), () => { resolve() })
     })
 }
 
@@ -85,7 +92,7 @@ function makePrefix () {
         '_',
         now.getFullYear(),
         String(now.getMonth()).padStart(2, '0'),
-        String(now.getDay()).padStart(2, '0'),
+        String(now.getDate()).padStart(2, '0'),
         '_',
         String(now.getHours()).padStart(2, '0'),
         String(now.getMinutes()).padStart(2, '0'),
@@ -94,7 +101,9 @@ function makePrefix () {
 }
 
 Object.assign(module.exports, {
-    write,
+    getSubgridMax,
+    writePng,
+    writeSubgrid,
     makeGif,
     readScene,
     makePrefix,
