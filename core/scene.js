@@ -21,7 +21,15 @@
         }
     }
 
+    function scaleSceneSize (scene, s) {
+        return {
+            width: Math.floor(scene.size.width * s),
+            height: Math.floor(scene.size.height * s),
+        }
+    }
+
     Object.assign(typeof module === 'undefined' ? self.sol : module.exports, {
         scaleScene,
+        scaleSceneSize,
     })
 })()
